@@ -22,6 +22,13 @@ let kSmallLowercase = "kSmallLowercase"
 
 class KeyboardViewController: UIInputViewController {
     
+    static var needsInputModeSwitchKey:KeyboardViewController?
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        KeyboardViewController.needsInputModeSwitchKey = self
+    }
+
+    
     let backspaceDelay: TimeInterval = 0.5
     let backspaceRepeat: TimeInterval = 0.07
     
