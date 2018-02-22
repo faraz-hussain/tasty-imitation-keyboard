@@ -22,12 +22,8 @@ let kSmallLowercase = "kSmallLowercase"
 
 class KeyboardViewController: UIInputViewController {
     
-    static var needsInputModeSwitchKey:KeyboardViewController?
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        KeyboardViewController.needsInputModeSwitchKey = self
-    }
-
+    static var hasGlobe: Bool = false
+    var hasGlobe1: Bool!
     
     let backspaceDelay: TimeInterval = 0.5
     let backspaceRepeat: TimeInterval = 0.07
@@ -92,6 +88,19 @@ class KeyboardViewController: UIInputViewController {
         }
         set {
             self.setHeight(newValue)
+        }
+    }
+    
+    var hasGlobe: Bool {
+        get{
+            if #available(iOSApplicationExtension 11.0, *) {
+                return self.needsInputModeSwitchKey
+            } else {
+                return false
+            }
+        }
+        set {
+            hasGlobe1 = newValue
         }
     }
     
@@ -874,4 +883,7 @@ class KeyboardViewController: UIInputViewController {
         settingsView.backButton?.addTarget(self, action: #selector(KeyboardViewController.toggleSettings), for: UIControlEvents.touchUpInside)
         return settingsView
     }
+    
+
 }
+
