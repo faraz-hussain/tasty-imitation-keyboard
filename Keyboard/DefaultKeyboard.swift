@@ -40,8 +40,12 @@ func defaultKeyboard() -> Keyboard {
     defaultKeyboard.add(key: keyModeChangeNumbers, row: 3, page: 0)
     
     let keyboardChange = Key(.keyboardChange)
-    if (KeyboardViewController.hasGlobe == false) {
-        defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 0)
+    if #available(iOSApplicationExtension 11.0, *) {
+        if (KeyboardViewController.shared?.needsInputModeSwitchKey == false) {
+            defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 0)
+        }
+    } else {
+            defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 0)
     }
 
     let settings = Key(.settings)
@@ -89,7 +93,11 @@ func defaultKeyboard() -> Keyboard {
     keyModeChangeLetters.toMode = 0
     defaultKeyboard.add(key: keyModeChangeLetters, row: 3, page: 1)
     
-    if (KeyboardViewController.hasGlobe == false) {
+    if #available(iOSApplicationExtension 11.0, *) {
+        if (KeyboardViewController.shared?.needsInputModeSwitchKey == false) {
+            defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 1)
+        }
+    } else {
         defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 1)
     }
     
@@ -123,7 +131,11 @@ func defaultKeyboard() -> Keyboard {
     
     defaultKeyboard.add(key: Key(keyModeChangeLetters), row: 3, page: 2)
     
-    if (KeyboardViewController.hasGlobe == false) {
+    if #available(iOSApplicationExtension 11.0, *) {
+        if (KeyboardViewController.shared?.needsInputModeSwitchKey == false) {
+            defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 2)
+        }
+    } else {
         defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 2)
     }
     

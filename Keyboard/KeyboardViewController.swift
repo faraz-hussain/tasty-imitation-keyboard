@@ -22,9 +22,8 @@ let kSmallLowercase = "kSmallLowercase"
 
 class KeyboardViewController: UIInputViewController {
     
-    static var hasGlobe: Bool = false
-    var hasGlobe1: Bool!
-    
+    static var shared: KeyboardViewController? = nil
+        
     let backspaceDelay: TimeInterval = 0.5
     let backspaceRepeat: TimeInterval = 0.07
     
@@ -90,20 +89,7 @@ class KeyboardViewController: UIInputViewController {
             self.setHeight(newValue)
         }
     }
-    
-    var hasGlobe: Bool {
-        get{
-            if #available(iOSApplicationExtension 11.0, *) {
-                return self.needsInputModeSwitchKey
-            } else {
-                return false
-            }
-        }
-        set {
-            hasGlobe1 = newValue
-        }
-    }
-    
+        
     // TODO: why does the app crash if this isn't here?
     convenience init() {
         self.init(nibName: nil, bundle: nil)
@@ -126,6 +112,8 @@ class KeyboardViewController: UIInputViewController {
         
         self.forwardingView = ForwardingView(frame: CGRect.zero)
         self.view.addSubview(self.forwardingView)
+        
+        KeyboardViewController.shared = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(KeyboardViewController.defaultsChanged(_:)), name: UserDefaults.didChangeNotification, object: nil)
     }
