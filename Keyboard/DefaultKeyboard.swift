@@ -39,11 +39,13 @@ func defaultKeyboard() -> Keyboard {
     keyModeChangeNumbers.toMode = 1
     defaultKeyboard.add(key: keyModeChangeNumbers, row: 3, page: 0)
     
-    if (KeyboardViewController.shared?.needsInputModeSwitchKey == true) {
-        let keyboardChange = Key(.keyboardChange)
-        defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 0)
-        defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 1)
-        defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 2)
+    if #available(iOSApplicationExtension 11.0, *) {        
+        if (KeyboardViewController.shared?.needsInputModeSwitchKey == true) {
+            let keyboardChange = Key(.keyboardChange)
+            defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 0)
+            defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 1)
+            defaultKeyboard.add(key: Key(keyboardChange), row: 3, page: 2)
+        }
     }
 
     let settings = Key(.settings)
