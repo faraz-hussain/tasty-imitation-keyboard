@@ -23,6 +23,8 @@ let kSmallLowercase = "kSmallLowercase"
 class KeyboardViewController: UIInputViewController {
     
     static var shared: KeyboardViewController? = nil
+    
+    var globeKeyShouldDisplay = true
         
     let backspaceDelay: TimeInterval = 0.5
     let backspaceRepeat: TimeInterval = 0.07
@@ -103,8 +105,6 @@ class KeyboardViewController: UIInputViewController {
             kSmallLowercase: false
         ])
         
-        self.keyboard = defaultKeyboard()
-        
         self.shiftState = .disabled
         self.currentMode = 0
         
@@ -114,6 +114,12 @@ class KeyboardViewController: UIInputViewController {
         self.view.addSubview(self.forwardingView)
         
         KeyboardViewController.shared = self
+        
+        if #available(iOSApplicationExtension 11.0, *) {
+            self.globeKeyShouldDisplay = self.needsInputModeSwitchKey
+        }
+        
+        self.keyboard = defaultKeyboard()
         
         NotificationCenter.default.addObserver(self, selector: #selector(KeyboardViewController.defaultsChanged(_:)), name: UserDefaults.didChangeNotification, object: nil)
     }
